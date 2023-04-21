@@ -146,9 +146,60 @@ git config --global user.email "1982782238@qq.com"
 
 ①进入github官网：	www.github.com
 
-②点击
+②找到 sign up进行注册
 
 ![image-20230323184610572](C:\Users\19827\AppData\Roaming\Typora\typora-user-images\image-20230323184610572.png)
+
+
+
+
+
+# 7.创建仓库：
+
+①点击绿色的new：
+![image-20230324145341773](C:\Users\19827\AppData\Roaming\Typora\typora-user-images\image-20230324145341773.png)
+
+②然后填写Repository name（存储库名字）
+
+![image-20230324145430246](C:\Users\19827\AppData\Roaming\Typora\typora-user-images\image-20230324145430246.png)
+
+③点击create repository创建存储库
+
+![image-20230324145730383](C:\Users\19827\AppData\Roaming\Typora\typora-user-images\image-20230324145730383.png)
+
+④针对仓库有个地址
+
+![image-20230324150645215](C:\Users\19827\AppData\Roaming\Typora\typora-user-images\image-20230324150645215.png)
+
+点击右边进行复制地址
+
+⑤找到一个文件夹右键点击git clone，在URL处将复制的地址进行粘贴，点击OK
+
+进行克隆：
+
+![image-20230324152419536](C:\Users\19827\AppData\Roaming\Typora\typora-user-images\image-20230324152419536.png)
+
+克隆完成
+
+![image-20230324152355535](C:\Users\19827\AppData\Roaming\Typora\typora-user-images\image-20230324152355535.png)
+
+⑥提交：右键自己克隆的存储库文件夹，找到小乌龟，有新修改的代码点击add（汉化版时添加）  （增加是针对这个文件夹下有新的文件产生）
+
+点击ok，然后点击commit在message中输入这个版本做了什么工作，然后点击commit；（下载的文件只要不上传就没有）
+
+⑦上传：在存储库文件夹右键选择小乌龟点击push，然后点击OK，把刚才提交的信息上传到远程的目录下面；
+
+⑧上传成功，在github文件夹下点击uploading an exising file下有自己上传的文件
+
+![image-20230324155123812](C:\Users\19827\AppData\Roaming\Typora\typora-user-images\image-20230324155123812.png)
+
+⑨上传之后存储库中有新的文件了，下载存储库中的新添加的文件：右键存储库文件夹，选择小乌龟，点击pull，点击OK下载新添加的文件；
+
+备注：修改了文件，但没有产生新的文件，右键存储库文件夹点击提交（git commit），在message中填写文件修改的版本或者内容概要，然后点击OK，提交成功点击push点击OK，把内容重新上传到远程的服务器上面去；
+
+然后右键小乌龟pull操作把代码从远程往自己的本地下载（不会覆盖原来版本的内容）
+
+
 
 
 
@@ -167,6 +218,8 @@ https://mp.weixin.qq.com/s/Bf7uVhGiu47uOELjmC5uXQ
 并行（并行开发）：两个任务同时执行；（多人协同开发）
 
 并发：时间片调度一个CPU执行两个程序；
+
+
 
 
 
@@ -514,6 +567,22 @@ Gogs
 5．如果让你负责团队，会怎么管理项目的代码?
 
 6．如何防止错误的代码提交?
+
+
+
+下载：
+
+git	**[https://git-scm.com/downloads](https://links.jianshu.com/go?to=https%3A%2F%2Fgit-scm.com%2Fdownloads)**
+
+git小乌龟	**[https://tortoisegit.org/download/](https://links.jianshu.com/go?to=https%3A%2F%2Ftortoisegit.org%2Fdownload%2F)**
+
+语言包	**[https://tortoisegit.org/download/](https://links.jianshu.com/go?to=https%3A%2F%2Ftortoisegit.org%2Fdownload%2F)**
+
+github官网：https://www.liaoxuefeng.com/wiki/896043488029600
+
+git教程	https://www.liaoxuefeng.com/wiki/896043488029600
+
+
 
 
 
