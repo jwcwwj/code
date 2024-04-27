@@ -1,0 +1,10 @@
+﻿  sort.c
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\sort\sort.c(415): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“time_t”
+  c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\sort\sort.c(415): note: 请考虑在格式字符串中使用“%lld”
+  c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\sort\sort.c(415): note: 请考虑在格式字符串中使用“%Id”
+  c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\sort\sort.c(415): note: 请考虑在格式字符串中使用“%I64d”
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\sort\sort.c(419): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“time_t”
+  c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\sort\sort.c(419): note: 请考虑在格式字符串中使用“%lld”
+  c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\sort\sort.c(419): note: 请考虑在格式字符串中使用“%Id”
+  c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\sort\sort.c(419): note: 请考虑在格式字符串中使用“%I64d”
+  sort.vcxproj -> C:\Users\19827\Desktop\计算机\code\data_structure_code\data_structure\x64\Debug\sort.exe

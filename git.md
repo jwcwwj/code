@@ -199,9 +199,7 @@ git config --global user.email "1982782238@qq.com"
 
 然后右键小乌龟pull操作把代码从远程往自己的本地下载（不会覆盖原来版本的内容）
 
-
-
-
+拉取到本地先stash change隐藏本地更新，再pull进行拉取更新。
 
 # 7.git基本理论和命令：
 

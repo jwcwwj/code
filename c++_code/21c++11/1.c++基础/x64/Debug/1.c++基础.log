@@ -1,0 +1,18 @@
+﻿  1.c++基础.cpp
+c:\users\19827\desktop\计算机\code\c++_code\21c++11\1.c++基础\1.c++基础.cpp(43): warning C4267: “初始化”: 从“size_t”转换到“T”，可能丢失数据
+          with
+          [
+              T=int
+          ]
+  c:\users\19827\desktop\计算机\code\c++_code\21c++11\1.c++基础\1.c++基础.cpp(43): note: 编译 类 模板 成员函数 "Vector<int>::Vector(const std::initializer_list<_Ty> &)" 时
+          with
+          [
+              _Ty=int
+          ]
+  c:\users\19827\desktop\计算机\code\c++_code\21c++11\1.c++基础\1.c++基础.cpp(94): note: 参见对正在编译的函数 模板 实例化“Vector<int>::Vector(const std::initializer_list<_Ty> &)”的引用
+          with
+          [
+              _Ty=int
+          ]
+  c:\users\19827\desktop\计算机\code\c++_code\21c++11\1.c++基础\1.c++基础.cpp(94): note: 参见对正在编译的 类 模板 实例化 "Vector<int>" 的引用
+  1.c++基础.vcxproj -> C:\Users\19827\Desktop\计算机\code\c++_code\21c++11\x64\Debug\1.c++基础.exe

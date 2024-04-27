@@ -1,0 +1,4 @@
+﻿  btree.c
+  btree.vcxproj -> C:\Users\19827\Desktop\计算机\code\data_structure_code\data_structure\x64\Debug\btree.exe
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\btree\btree.c(26): warning C6011: 取消对 NULL 指针“root”的引用。
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\btree\btree.c(172): warning C6011: 取消对 NULL 指针“node”的引用。

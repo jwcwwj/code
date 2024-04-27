@@ -1,0 +1,41 @@
+﻿  priority_queue的实现.cpp
+c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(34): warning C4018: “<”: 有符号/无符号不匹配
+  c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(31): note: 编译 类 模板 成员函数 "void PriorityQueue<int,std::vector<int,std::allocator<_Ty>>,std::less<_Ty>>::shiftDown(int)" 时
+          with
+          [
+              _Ty=int
+          ]
+  c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(88): note: 参见对正在编译的函数 模板 实例化“void PriorityQueue<int,std::vector<int,std::allocator<_Ty>>,std::less<_Ty>>::shiftDown(int)”的引用
+          with
+          [
+              _Ty=int
+          ]
+  c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(155): note: 参见对正在编译的 类 模板 实例化 "PriorityQueue<int,std::vector<int,std::allocator<_Ty>>,std::less<_Ty>>" 的引用
+          with
+          [
+              _Ty=int
+          ]
+c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(38): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(61): error C2664: “std::vector<int,std::allocator<_Ty>>::vector(std::vector<_Ty,std::allocator<_Ty>> &&,const _Alloc &) noexcept(<expr>)”: 无法将参数 2 从“_Ty *(__cdecl *)(_Ty (&)[_Size]) noexcept”转换为“_Iter”
+          with
+          [
+              _Ty=int,
+              _Alloc=std::allocator<int>
+          ]
+          and
+          [
+              _Iter=int *
+          ]
+  c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(62): note: 上下文不允许消除重载函数的歧义
+  c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(155): note: 参见对正在编译的函数 模板 实例化“PriorityQueue<int,std::vector<int,std::allocator<_Ty>>,std::less<_Ty>>::PriorityQueue<int*>(Iterator,Iterator)”的引用
+          with
+          [
+              _Ty=int,
+              Iterator=int *
+          ]
+  c:\users\19827\desktop\计算机\code\c++_code\10priority_queue\10priority_queue\priority_queue的实现.cpp(155): note: 参见对正在编译的函数 模板 实例化“PriorityQueue<int,std::vector<int,std::allocator<_Ty>>,std::less<_Ty>>::PriorityQueue<int*>(Iterator,Iterator)”的引用
+          with
+          [
+              _Ty=int,
+              Iterator=int *
+          ]

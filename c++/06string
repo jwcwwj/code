@@ -1,0 +1,2631 @@
+# 1.c语言中的字符串
+
+C语言中，字符串是以'\0'结尾的一些字符的集合，为了操作方便，C标准库中提供了一些str系列的库函数，但是这
+
+些库函数与字符串是分离开的，不太符合OOP的思想，而且底层空间需要用户自己管理，稍不留神可能还会越界
+
+访问。
+
+
+
+# 2.标准库中的string类
+
+1.字符串是表示字符序列的类；
+
+2.标准的字符串类提供了对此类对象的支持，其接口类似于标准字符容器的接口，但添加了专门用于操作单字节字
+
+符字符串的设计特性；
+
+3.string类是使用char(即作为它的字符类型，使用它的默认char_traits和分配器类型(关于模板的更多信息，请参
+
+阅basic_string)；
+
+4.string类是basic_string模板类的一个实例，它使用char来实例化basic_string模板类，并用char_traits和
+
+allocator作为basic_string的默认参数(关于更多的模板信息请参考basic_string)；
+
+5.注意，这个类独立于所使用的编码来处理字节:如果用来处理多字节或变长字符(如UTF-8)的序列，这个类的所有
+
+成员(如长度或大小)以及它的迭代器，将仍然按照字节(而不是实际编码的字符)来操作。
+
+总结：
+
+1.string是表示字符串的字符串类；
+
+2.该类的接口与常规容器的接口基本相同，再添加了一些专门用来操作string的常规操作。  
+
+3.string在底层实际是：basic_string模板类的别名，typedef basic_string<char, char_traits, allocator> string;
+
+4.不能操作多字节或者变长字符的序列。
+
+在使用string类时，必须包含string头文件以及using namespace std；
+
+
+
+# 3.string类的常用接口说明
+
+## 3.1string类对象构造（constructor）
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//构造函数
+int main()
+{
+	basic_string<char> a;		//等价于string a;
+	//default(1)string();
+	string str1;				//创建空的string对象
+	//copy(2)string(const string& str);
+	string copy(str1);			//拷贝构造
+	//from c - string(4)string(const char* s);
+	string str2("abc");		//使用常量字符串初始化
+	//substring(3)string(const string& str, size_t pos, size_t len = npos);
+	string substr(str2, 1, 2);	//从str2索引为1的位置开始获取2字符拷贝到substr中	"bc"	第三个参数越界了还是"bc"
+	//npos 是一个静态成员变量，通常定义为类型 size_t 的最大值
+	//（即 std::numeric_limits<std::size_t>::max()）。
+	//在字符串或者容器的成员函数中，通常会使用 npos 来表示查找失败或者没有匹配项
+	//from sequence(5)string(const char* s, size_t n);
+	string str3("12345678", 5);		//"12345"
+	//fill(6)string(size_t n, char c);
+	string str4(5, 'a');	//"aaaaa"
+	//range(7)template <class InputIterator>  string(InputIterator first, InputIterator last);
+	std::vector<char> vec = { 'a','b','c','d','e','f' };
+	std::string str(vec.begin(), vec.end()); // 使用迭代器范围构造 string
+	string str5 = "abcde";	//单参构造的隐式类型转换
+	cout << str5.back() << endl;	//e
+	return 0;
+}
+//输出结果：
+//e
+```
+
+
+
+## 3.2string赋值函数
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//赋值函数
+int main()
+{
+	//string& operator=(const char* s);	//char*类型字符串赋值给当前的字符串
+	string str1;
+	str1 = "hello world";
+	//string& operator=(const string &s);//把字符串s赋给当前的字符串
+	string str2;
+	str2 = str1;
+	//string& operator=(char c);//字符赋值给当前的字符串
+	string str3;
+	str3 = 'a';
+	//string& assign(const char *s);//把字符串s赋给当前的字符串
+	string str4;
+	str4.assign("hello c++");
+	//string& assign(const char *s，int n);//把字符串s的前n个字符赋给当前的字符串
+	string str5;
+	str5.assign("hello c++", 5);		//hello，把字符串hello c++的前5个字符赋给str5；
+	//string& assign(const string &s);//把字符串s赋给当前字符串
+	string str6;
+	str6.assign(str5);
+	//strina& assian(int n, char c) ://用n个字符c赋给当前字符串
+	string str7;
+	str7.assign(5, 'x');		//xxxxx，把5个字符x赋给str7；
+	return 0;
+}
+//没有输出结果
+```
+
+
+
+## 3.3string字符串拼接/追加
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//字符串拼接/追加
+int main()
+{
+	//string& operator+=(const char* str);	//重载+=操作符
+	string str1 = "我";
+	str1 += "爱玩游戏";		//str1变为"我爱玩游戏"
+	//string& operator+=(const char c);//重载+=操作符
+	str1 += ':';		//str1变为"我爱玩游戏:"
+	//string& operator+=(const string& str);//重载+=操作符
+	string str2 = " LOL DNF ";
+	str1 += str2;	//str1变为"我爱玩游戏:LOL DNF"
+	//string& append(const char* s);	//把字符串s连接到当前字符串结尾
+	string str3 = "I";
+	str3.append(" love ");		//str3变为"I love " 
+	//string& append(const char* s，int n);//把字符串s的前n个字符连接到当前字符串结尾
+	str3.append("game abcde", 4);		//str3变为"I love game"
+	//string& append(const string &s); //同operator += (const string& str)
+	str3.append(str2);	//str3变为"I love game LOL DNF "
+	//string& append(const string &s，int pos，int n);//字符串s中从pos开始的n个字符连接到字符串结尾
+	str3.append(str2, 4, 3);	 //从下标4位置开始，截取3个字符，拼接到字符串末尾；
+	//str3变为"I love game LOL DNF DNF"
+	string str4;
+	str4.append(str3, 4, 3);	//str4是空字符串，追加之后结果为"ve "
+	cout << str4 << endl;
+
+	//append区间追加
+	string str = "abcdefg";
+	string s = "123";
+	s.append(str.begin(), str.begin() + 3);
+	cout << s << endl;	//123abc
+	s.append(str.begin(), str.end());
+	cout << s << endl;	//123abcabcdefg
+	return 0;
+}
+//输出结果：
+//ve
+//123abc
+//123abcabcdefg
+```
+
+
+
+## 3.4string字符串查找和替换
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//查找和替换
+int main()
+{
+	//查找
+	//int find(const string& str, int pos = 0) const;	//查找str第一次出现位置,从pos开始查找
+	//int find(const char* s, int pos = 0) const;		//查找s第—次出现位置,从pos开始查找
+	//int find(const char* s，int pos，int n) const;	//从pos位置查找s的前n个字符第一次位置
+	//int find(const char c，int pos = 0) const;		//查找字符c第一次出现位置
+	string str1 = "abcdefgde";	
+	int pos = str1.find("de");	//在str1中从左边开始查找”de”第一次出现的位置，找到了返回索引，未找到返回 - 1；
+	cout << pos << endl;			//3
+	//int rfind(const string& str，int pos = npos) const; //查找str最后一次位置, 从pos开始查找	npos是正的最大值
+	//int rfind(const char* s，int pos = npos) const;	//查找s最后—次出现位置, 从pos开始查找
+	//int rfind(const charf* s，int pos，int n) const;	//从pos查找s的前n个字符最后一次位置
+	//int rfind(const char c， int pos = 0) const;		//查找字符c最后—次出现位置
+	pos = str1.rfind("de");	//在str1中从右边开始查找”de”第一次出现的位置，找到了返回索引，未找到返回-1；
+	cout << pos << endl;		//7
+	//string&replace(int pos，int n，const string& str); //替换从pos开始n个字符为字符串str
+	//string & replace(int pos，int n, const char* s);	//替换从pos开始的n个字符为字符串s
+	//替换
+	string str2 = "abcdefgde";
+	str2.replace(1, 3, "1111");	//从索引1开始替换3个字符，替换为"1111";
+	cout << str2 << endl;		//a111efgde
+	return 0;
+}
+//输出结果：
+//3
+//7
+//a1111efgde
+```
+
+
+
+## 3.5string字符串比较
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//字符串比较
+int main()
+{
+	//按字符的ASCII码进行比较，相等返回0，大于返回1，小于返回-1；
+	//int compare(const string &s) const; //与字符串s比较
+	//int compare(const char *s) const;	  //与字符串s比较
+	string s1 = "hello";
+	string s2 = "aello";
+	int ret = s1.compare(s2);		//s1和s2进行比较；大于返回1 ret = 1
+	cout << ret << endl;			//1
+	return 0;
+}
+//输出结果：
+//1
+```
+
+
+
+## 3.6string类对象字符存取
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//字符串存取
+int main()
+{
+	//char& operator[](int n); //通过0方式取字符
+	//char& at(int n);		   //通过at方法获取字符
+	string str = "abcdef";
+	cout << str[2] << endl;		//c，访问索引为2个字符
+	cout << str.at(1) << endl;	//b，访问索引为1个字符（返回pos位置的字符，const string类对象调用）
+	//At越界会抛出异常，[]不会抛出异常，[]越界会报断言错误
+	cout << str.back() << endl;		//f
+	cout << str.front() << endl;	//a
+	return 0;
+}
+//输出结果：
+//c
+//b
+//f
+//a
+```
+
+
+
+## 3.7string类对象插入和删除
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//string类对象的插入和删除
+int main()
+{
+	//string& insert(int pos, const char* s);	//在指定位置插入字符串
+	//string& insert(int pos, const string& str);//在指定位置插入字符串
+	//string& insert(int pos, int n，char c);	//在指定位置插入n个字符c
+	//string& erase(int pos, int n = npos);		//删除从pos开始的n个字符
+	//插入:
+	string str = "hello";
+	str.insert(1, "111");		//在索引1的位置插入”111”；
+	cout << str << endl;		//h111ello
+	//删除：
+	str.erase(1, 3);  	//从索引1的位置开始删除3个字符；
+	cout << str << endl;		//hello
+	return 0;
+}
+//输出结果：
+//h111ello
+//hello
+```
+
+
+
+## 3.8string子串：从字符串中获取想要的子串
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//string子串：从字符串中获取想要的子串
+int main()
+{
+	//string substr(int pos = 0, int n = npos) const; //返回由pos开始的n个字符组成的字符串
+	string str = "abcdefg";
+	string subStr = str.substr(1, 3);	//返回索引1的位置开始的3个字符（subStr里的字符串是”bcd”）
+	cout << str << endl;		//abcdefg
+	cout << subStr << endl;		//bcd
+	return 0;
+}
+//输出结果：
+//abcdefg
+//bcd
+```
+
+
+
+## 3.9string类对象的容量操作
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//string类对象的容量操作
+int main()
+{
+	string s = "abcdefgh";
+	//s.size();		//返回字符串有效字符长度，推荐使用，因为别的容器中也存在size接口
+	//s.length();	//返回字符串有效字符长度
+	cout << s.size() << endl;		//8
+	cout << s.length() << endl;		//8
+	//s.capacity();	//返回空间总大小（容量）
+	cout << s.capacity() << endl;	//15	//capacity永远都是大于等于size，大多时候是大于size
+	//s.empty();	//检测字符串是否为空串，是返回true，否则返回false；
+	if (s.empty())
+		cout << "字符串s是空串" << endl;
+	else
+		cout << "字符串s不是空串" << endl;	//字符串s不是空串
+	//s.clear();	//只是将string中有效字符(size变为0)清空，不改变底层空间大小（容量）;
+	s.clear();
+	cout << s.size() << endl;		//0
+	cout << s.capacity() << endl;	//15
+	//s.resize(n, c);	//将有效字符的个数变成n个，多出的空间用字符c填充（默认用’\0’填充）；
+	//resize修改有效元素的个数，resize可能会影响容量
+	//调整有效元素个数超过当前capacity，会使容量变大
+	s.resize(16, 'a');
+	cout << s.size() << endl;	//16
+	cout << s.capacity() << endl;	//31
+	//调整有效元素个数小于当前的size，会使size变小，不影响capacity
+	s.resize(12);		//修改size，不影响capacity
+	cout << s.size() << endl;	//12
+	cout << s.capacity() << endl;	//31
+	//s.reserve(15);	//为字符串预留空间；（不改变有效元素个数，当reserve的参数小于string的底层空间总大小（容量）时，reserver不会改变容量大小。）
+	//reserve修改容量（只能大，不能小），只增加容量，不减小容量，不影响size
+	//调整容量大于当前capacity，容量调整到大于等于调整的值
+	s.reserve(35);
+	cout << s.size() << endl;	//12
+	cout << s.capacity() << endl;	//47
+	s.reserve(25);
+	//调整容量小于当前capacity，不调整
+	cout << s.size() << endl;	//12
+	cout << s.capacity() << endl;	//47
+	//调整容量小于当前size，不调整
+	cout << s.size() << endl;	//12
+	cout << s.capacity() << endl;	//47
+	return 0;
+}
+//输出结果：
+//8
+//8
+//15
+//字符串s不是空串
+//0
+//15
+//16
+//31
+//12
+//31
+//12
+//47
+//12
+//47
+//12
+//47
+```
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+	string s;
+	size_t sz = s.capacity();
+	cout << sz << endl;
+	for (int i = 0; i < 105; ++i)
+	{
+		s.push_back('c');
+		if (sz != s.capacity())
+		{
+			sz = s.capacity();
+			cout << "capacity changed: " << sz << '\n';
+		}
+	}
+	return 0;
+	//输出结果：
+	//15
+	//capacity changed : 31
+	//capacity changed : 47
+	//capacity changed : 70
+	//capacity changed : 105
+}
+```
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//利用reserve提高插入数据的效率，避免增容带来的开销
+int main()
+{
+	string s;
+	s.reserve(100);
+	size_t sz = s.capacity();
+	cout << sz << endl;
+	for (int i = 0; i < 100; ++i)
+	{
+		s.push_back('c');
+		if (sz != s.capacity())
+		{
+			sz = s.capacity();
+			cout << "capacity changed: " << sz << '\n';
+		}
+	}
+	return 0;
+	//输出结果：
+	//111
+}
+```
+
+注意：
+
+1.size()与length()方法底层实现原理完全相同，引入size()的原因是为了与其他容器的接口保持一致，一般情况下
+
+基本都是用size()；
+
+2.clear()只是将string中有效字符清空，不改变底层空间大小（容量），容量不变，size变为0；
+
+3.resize(size_t n) 与 resize(size_t n, char c)都是将字符串中有效字符个数改变到n个，不同的是当字符个数增多
+
+时：resize(n)用0来填充多出的元素空间，resize(size_t n, char c)用字符c来填充多出的元素空间。注意：resize在
+
+改变元素个数时，如果是将元素个数增多，可能会改变底层容量的大小，如果是将元素个数减少，底层空间总大小
+
+不变；
+
+4.reserve(size_t res_arg=0)：为string预留空间，不改变有效元素个数，当reserve的参数小于string的底层空间
+
+总大小时，reserver不会改变容量大小。
+
+
+
+## 3.10string类对象的访问及遍历操作
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//string类对象的访问操作
+int main()
+{
+	string s1("hello Bit");
+	const string s2("Hello Bit");
+	cout << s1 << " " << s2 << endl;			//hello Bit Hello Bit
+	cout << s1[0] << " " << s2[0] << endl;		//h H
+	s1[0] = 'H';
+	cout << s1 << endl;			//Hello Bit
+	//s2[0] = 'h';	//代码编译失败，因为const类型对象不能修改
+	return 0;
+}
+//输出结果：
+//hello Bit Hello Bit
+//h H
+//Hello Bit
+```
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//string类对象的遍历操作
+int main()
+{
+	string s("hello world");
+	//三种遍历方式：
+	//1.范围for循环
+	for (const auto& c : s)
+		cout << c << " ";		//h e l l o   w o r l d
+	cout << endl;
+	//2.for + operator[]
+	for (int i = 0; i < s.size(); ++i)
+		cout << s[i] << " ";	//h e l l o   w o r l d
+	cout << endl;
+	//3.迭代器
+	for (string::const_iterator it = s.begin(); it != s.end(); it++)
+	{
+		cout << *it << " ";		//h e l l o   w o r l d
+	}
+	cout << endl;
+
+	//反向遍历
+	string::const_reverse_iterator rit = s.rbegin();
+	rit++;
+	while (rit != s.rend())
+	{
+		cout << *rit << " ";		//l r o w o l l e h 
+		++rit;
+	}
+	return 0;
+}
+//输出结果：
+//h e l l o   w o r l d
+//h e l l o   w o r l d
+//h e l l o   w o r l d
+//l r o w   o l l e h
+```
+
+
+
+## 3.11string类对象的修改操作
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//string类对象的修改操作
+int main()
+{
+	string s = "abcdef";
+	s.push_back('g');
+	cout << s << endl;	//abcdefg，尾插字符
+	s.pop_back();
+	cout << s.c_str() << endl;	//abcdef，尾删字符
+	//s.c_str()，以c语言的方式打印字符串
+
+	string str("string.cpp");
+	//获取str的后缀
+	int pos = str.rfind('.');
+	string substr = str.substr(pos, str.size() - pos);
+	cout << str << endl;	//string.cpp
+	cout << substr << endl;	//.cpp
+	//npos（-1）是string里面的一个静态成员变量；	static const size_t npos = -1;	npos是无符号整数的最大值
+	//取出url中的域名
+	string url("http://www.cplusplus.com/reference/string/string/find/");
+	cout << url << endl;	//http://www.cplusplus.com/reference/string/string/find/
+	size_t start = url.find("://");		//找不到返回npos
+	if (start == string::npos)
+	{
+		cout << "invalid url" << endl;
+		return 0;
+	}
+	start += 3;		//防止://中的/
+	size_t finish = url.find('/', start);	//在url字符串中从start位置开始查找'/'的位置，返回索引
+	string address = url.substr(start, finish - start);
+	cout << address << endl;	//www.cplusplus.com
+	//删除url的协议前缀
+	pos = url.find("://");
+	url.erase(0, pos + 3);
+	cout << url << endl;	//www.cplusplus.com/reference/string/string/find/
+	return 0;
+}
+//输出结果：
+//abcdefg
+//abcdef
+//string.cpp
+//.cpp
+//http://www.cplusplus.com/reference/string/string/find/
+//www.cplusplus.com
+//www.cplusplus.com/reference/string/string/find/
+```
+
+注意点：
+
+1.在string尾部追加字符时，s.push_back(c) / s.append(1, c) / s += 'c'三种的实现方式差不多，一般情况下string
+
+类的+=操作用的比较多，+=操作不仅可以连接单个字符，还可以连接字符串；
+
+2.对string操作时，如果能够大概预估到放多少字符，可以先通过reserve把空间预留好。
+
+
+
+## 3.12string类非成员函数
+
+# std::operator>> (string)
+
+```c++
+istream& operator>> (istream& is, string& str);
+```
+
+| 函数                        | 功能说明                                                     |
+| --------------------------- | ------------------------------------------------------------ |
+| operator+                   | 尽量少用，因为传值返回，导致深拷贝效率低                     |
+| operator>>（重点）          | 输入运算符重载，遇到空格只能读到空格之前的（cin >> str;）    |
+| operator<<（重点）          | 输出运算符重载                                               |
+| getline（重点）             | 获取一行字符串，getline可以有空格，遇到换行就结束（getline(cin,str);） |
+| relational operator（重点） | 大小比较                                                     |
+
+说明:
+
+getline(cin,str,',');	表示遇到逗号结束读取
+
+
+
+## 3.13std::string::shrink_tof_it（容量减小，缩小到一个合适的大小，不常用）（c++11）
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//缩小容量：缩小到一个合适的大小
+int main()
+{
+	//std::string::shrink_tof_it
+	//函数原型：void shrink_tof_it();
+	string s = "123";
+	cout << s.size() << endl;			//3
+	cout << s.capacity() << endl;		//15
+	s.shrink_to_fit();
+	cout << s.size() << endl;			//3
+	cout << s.capacity() << endl;		//15
+	s.reserve(100);
+	cout << s.size() << endl;			//3
+	cout << s.capacity() << endl;		//111
+	s.shrink_to_fit();
+	cout << s.size() << endl;			//3
+	cout << s.capacity() << endl;		//15
+	return 0;
+}
+//输出结果：
+//3
+//15
+//3
+//15
+//3
+//111
+//3
+//15
+```
+
+
+
+## 3.14总结用的比较多的
+
+begin
+
+end
+
+size
+
+capacity
+
+resize
+
+reserve	预留空间
+
+reverse	字符串翻转
+
+operator[]
+
+operator+=
+
+pop_back
+
+c_str
+
+find
+
+rfind
+
+substr
+
+operator>>
+
+operator<<
+
+getline
+
+
+
+# 4.迭代器
+
+迭代器：元素访问的一种设计模式，所用容器都需要遵循相同的设计规范，所有容器迭代器的使用方式都是相同
+
+的。
+
+迭代器的使用方式和指针类似。
+
+设计规范：
+
+1.begin迭代器：指向第一个元素的位置；
+
+2.end迭代器：指向最后一个元素的下一个位置；
+
+3.访问数据：通过解引用完成（*、->）;
+
+4.迭代器移动：++移动到下一个元素的位置，--移动到上一个元素的位置；
+
+5.位置的支持：支持!=、==;
+
+有些容器具有反向迭代器：
+
+6.rbegin迭代器：指向最后一个元素的位置；
+
+7.rend迭代器：指向第一个元素的前一个位置；
+
+```c++
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//迭代器
+int main()
+{
+	string str = "12345";
+	//反向迭代器
+	for (string::const_reverse_iterator it = str.rbegin(); it != str.rend(); ++it)	//这里是++，反向移动
+	{
+		cout << *it << " ";	//5 4 3 2 1
+	}
+	cout << endl;
+
+	//反向遍历
+	string s = "abcd";
+	for (string::const_reverse_iterator it = s.rbegin(); it != s.rend(); ++it)	//这里是++，反向移动
+	{
+		cout << *it << " ";	//d c b a
+	}
+	cout << endl;
+
+	string::const_reverse_iterator rit = s.rbegin();
+	while (rit != s.rend())
+	{
+		cout << *rit << " ";		//d c b a
+		++rit;
+	}
+	cout << endl;
+
+	string::iterator it = str.begin();
+	while (it != str.end())
+	{
+		cout << *it << " ";		//1 2 3 4 5
+		*it = 'a';	//迭代器进行内容修改
+		++it;
+	}
+	cout << endl;
+
+	string::const_iterator it1 = str.begin();	//只读迭代器
+
+	//范围for是通过迭代器实现的，支持迭代器的容器就支持范围for
+	for (const auto& ch : str)
+		cout << ch << " ";	//aaaaa
+	cout << endl;
+
+	string::const_reverse_iterator cit = str.crbegin();		//const right begin
+	return 0;
+}
+//输出结果：
+//5 4 3 2 1
+//d c b a
+//d c b a
+//1 2 3 4 5
+//a a a a a
+```
+
+
+
+# 5.力扣题
+
+## 917.仅仅反转字母
+
+题目：给你一个字符串 `s` ，根据下述规则反转字符串：
+
+- 所有非英文字母保留在原有位置。
+- 所有英文字母（小写或大写）位置反转。
+
+返回反转后的
+
+ `s` *。*
+
+```c++
+示例1：
+输入：s = "ab-cd"
+输出："dc-ba"
+
+示例2：
+输入：s = "a-bC-dEf-ghIj"
+输出："j-Ih-gfE-dCba"
+
+示例3：
+输入：s = "Test1ng-Leet=code-Q!"
+输出："Qedo1ct-eeLg=ntse-T!"
+```
+
+```c++
+方法1：双指针
+class Solution {
+public:    
+    bool isLetter(const char& ch)
+    {
+        return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
+    }
+
+    string reverseOnlyLetters(string s) {
+        int start = 0;
+        int end = s.size() - 1;
+        while(start < end)
+        {
+            //找到有效字符
+            while(start < end && !isLetter(s[start]))
+                ++start;
+            while(start < end && !isLetter(s[end]))
+                --end;
+            swap(s[start],s[end]);
+            ++start;
+            --end;
+        }
+        return s;
+    }
+};
+时间复杂度：O(n)，n是字符串的长度。
+空间复杂度：O(1)，没有使用额外空间。
+```
+
+```c++
+方法2：迭代器
+class Solution {
+public:    
+    bool isLetter(const char& ch)
+    {
+        return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
+    }
+
+    string reverseOnlyLetters(string s) {
+        if(s.empty())
+            return s;
+        string::iterator begin = s.begin();
+        string::iterator end = s.end()--;
+        while(begin < end)
+        {
+            while(begin < end && !isLetter(*begin))
+                ++begin;
+            while(begin < end && !isLetter(*end))
+                --end;
+            swap(*begin,*end);
+            ++begin;
+            --end;
+        }
+        return s;
+    }
+};
+时间复杂度：O(n)，n是字符串的长度。
+空间复杂度：O(1)，没有使用额外空间。
+```
+
+
+
+## 387.字符串中的第一个唯一字符
+
+题目：
+
+给定一个字符串 `s` ，找到它的第一个不重复的字符，并返回它的索引 。如果不存在，则返回 `-1` 。
+
+**提示:**
+
+- `1 <= s.length <= 105`
+- `s` 只包含小写字母
+
+```c++
+示例1：
+输入: s = "leetcode"
+输出: 0
+    
+示例2:
+输入: s = "loveleetcode"
+输出: 2
+
+示例3:
+输入: s = "aabb"
+输出: -1
+```
+
+```c++
+方法1：暴力法，超出时间限制
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        for(int i = 0; i < s.size(); i++)
+        {
+            int count = 0;
+            for(int j = 0; j < s.size(); j++)
+            {
+                if(s[i] == s[j])
+                    ++count;
+            }
+            if(count == 1)
+                return i;
+        }
+        return -1;
+    }
+};
+时间复杂度：O(n^2)，n是字符串的长度，循环遍历字符串两层。
+空间复杂度：O(1)，没有使用额外空间。
+```
+
+```c++
+方法2：数组 + 哈希思想
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        int count[26] = {0}; 
+        
+        //for(int i = 0; i < s.size(); i++)
+        //{
+        //   ++count[s[i] - 'a'];
+        //}
+        
+        for(const auto& ch : s)
+            ++count[ch - 'a'];
+        for(int i = 0; i < s.size(); i++)
+        {
+            if(count[s[i] - 'a'] == 1)
+                return i;
+        }
+        return -1;
+    }
+};
+时间复杂度：O(n)，n是字符串的长度。
+空间复杂度：O(1)，使用了长度为26的数组。
+```
+
+```c++
+方法3：使用哈希表存储频数
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<int, int> frequency;
+        for (char ch: s) {
+            ++frequency[ch];
+        }
+        for (int i = 0; i < s.size(); ++i) {
+            if (frequency[s[i]] == 1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+时间复杂度：O(n)，n是字符串的长度。
+空间复杂度：O(1)，空间复杂度：O(∣Σ∣)，其中 Σ 是字符集，在本题中 s 只包含小写字母，因此 ∣Σ∣≤ 26。我们需要 O(∣Σ∣)的空间存储哈希映射。
+```
+
+```c++
+方法4：使用哈希表存储索引
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<int, int> position;   //定义一个哈希表
+        int n = s.size();   //获取字符串s的长度
+        for (int i = 0; i < n; ++i) 
+        {
+            //如果当前字符已经在哈希表中
+            if (position.count(s[i]))  
+            {
+                position[s[i]] = -1;    //标记当前字符的位置为-1，表示已经重复出现过了
+            }
+            else 
+            {
+                position[s[i]] = i;     //将当前字符加入哈希表中，并记录其位置
+            }
+        }
+
+        int first = n;      //初始值为s的长度n
+        //遍历哈希表
+        for (auto [_, pos]: position) 
+        {    
+            //如果当前字符位置不为-1且在字符串中的位置小于first
+            if (pos != -1 && pos < first) 
+            {  
+                first = pos;        //更新first为当前字符的位置
+            }
+        }
+
+        if (first == n) 
+        {    
+            //如果所有字符都出现过多次，则first保持初始值n
+            first = -1; // 将其转换为-1，表示不存在唯一字符
+        }
+    
+        return first; // 返回第一个不重复出现的字符的位置
+    }
+};
+时间复杂度：O(n)，n是字符串的长度。
+空间复杂度：O(1)，空间复杂度：O(∣Σ∣)，其中 Σ 是字符集，在本题中 s 只包含小写字母，因此 ∣Σ∣≤ 26。我们需要 O(∣Σ∣)的空间存储哈希映射。
+```
+
+```c++
+方法5：队列
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<char, int> position;      //定义一个哈希表
+        queue<pair<char, int>> q;               //定义一个队列
+        int n = s.size();                       //获取字符串s的长度
+        for (int i = 0; i < n; ++i)
+        {
+            if (!position.count(s[i]))
+            //返回哈希桶中关键码为key的键值对的个数
+            //unordered_map中key是不能重复的，因此count函数的返回值最大为1
+            { 
+                //如果当前字符没有出现过
+                position[s[i]] = i;             //将其加入哈希表中，并记录其位置
+                q.emplace(s[i], i);             //将其加入队列中
+            }
+            else
+            {       
+                //如果当前字符已经出现过
+                position[s[i]] = -1;            //标记当前字符的位置为-1，表示已经重复出现过了
+                while (!q.empty() && position[q.front().first] == -1) 
+                { 
+                    // 删除队列中所有位置为-1的字符
+                    q.pop();
+                }
+            }
+        }
+
+        return q.empty() ? -1 : q.front().second; 
+        //如果队列为空，则返回-1；否则，返回队列中第一个元素的位置
+    }
+};
+时间复杂度：O(n)，n是字符串的长度。
+空间复杂度：O(1)，空间复杂度：O(∣Σ∣)，其中 Σ 是字符集，在本题中 s 只包含小写字母，因此 ∣Σ∣≤ 26。我们需要 O(∣Σ∣)的空间存储哈希映射。
+```
+
+
+
+## 58.最后一个单词的长度
+
+题目：
+
+给你一个字符串 s，由若干单词组成，单词前后用一些空格字符隔开。返回字符串中 最后一个 单词的长度。
+
+单词 是指仅由字母组成、不包含任何空格字符的最大子字符串。
+
+**提示：**
+
+- `1 <= s.length <= 104`
+- `s` 仅有英文字母和空格 `' '` 组成
+- `s` 中至少存在一个单词
+
+```c++
+示例1：
+输入：s = "Hello World"
+输出：5
+解释：最后一个单词是“World”，长度为5。
+
+示例2：
+输入：s = "   fly me   to   the moon  "
+输出：4
+解释：最后一个单词是“moon”，长度为4。
+
+示例3：
+输入：s = "luffy is still joyboy"
+输出：6
+解释：最后一个单词是长度为6的“joyboy”。
+```
+
+```c++
+方法1：提前处理特殊情况
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+    	//getline(cin,s);   //从控制台读到字符串s中
+        
+    	//从右边第一个不是空格的字符开始计数，找到空格结束
+    	int idx = s.size() - 1;
+    	while(s[idx] == ' ')
+        	idx--;
+        
+    	int count = 0; 
+ 
+        //判断顺序不能颠倒，首先要保证索引位置的值存在，就是索引大于等于0
+    	while(idx >= 0 && s[idx] != ' ')   
+    	{
+        	count++;
+        	idx--;
+    	}
+ 
+    	return count;
+    }
+};
+时间复杂度：O(n)，n最多为空格和最后一个单词加起来的长度。
+空间复杂度：O(1)，没有使用额外空间。
+```
+
+```c++
+方法2：从后向前一次遍历
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+    	//从右边第一个不是空格的字符开始计数，找到空格结束
+    	int count = 0; 
+
+    	for(int i = s.size() - 1; i >= 0; i--)
+    	{
+        	if((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z'))    
+        	{
+            	count++;    //是字符才开始计数
+        	}
+        	else
+        	{
+            	if(count != 0)   //避免最后一个字符是空格  " abcd cdf "    这样会返回0
+                	break;     	 //return count;  也是可以的
+        	}
+    	}
+ 
+   		return count;
+    }
+};
+时间复杂度：O(n)，n最多为空格和最后一个单词加起来的长度。
+空间复杂度：O(1)，没有使用额外空间。
+```
+
+
+
+## 125.验证回文串
+
+题目：
+
+如果在将所有大写字符转换为小写字符、并移除所有非字母数字字符之后，短语正着读和反着读都一样。则可以认
+
+为该短语是一个回文串 。
+
+字母和数字都属于字母数字字符。
+
+给你一个字符串 s，如果它是 回文串 ，返回 true ；否则，返回 false 。
+
+**提示：**
+
+- `1 <= s.length <= 2 * 105`
+- `s` 仅由可打印的 ASCII 字符组成
+
+```c++
+示例1：
+输入: s = "A man, a plan, a canal: Panama"
+输出：true
+解释："amanaplanacanalpanama" 是回文串。
+
+示例2：
+输入：s = "race a car"
+输出：false
+解释："raceacar" 不是回文串。
+
+示例3：
+输入：s = " "
+输出：true
+解释：在移除非字母数字字符之后，s 是一个空字符串 "" 。
+由于空字符串正着反着读都一样，所以是回文串。
+```
+
+```c++
+class Solution {
+public:
+    //判断是不是有效字符
+    bool isVaild(const char& ch)
+    {
+        //只判断是不是小写字母和数字
+        return (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z');
+    }
+
+    bool isPalindrome(string s) {
+        int begin = 0;
+        int end = s.size() - 1;
+        //把大写字母转换为小写
+        //大写字母65到90，小写字母97到122
+        for(auto& ch : s)
+        {
+            if(ch >= 'A' && ch <= 'Z')
+               ch += 'a' - 'A';      //ch += 32;    +=运算符的优先级小于双目运算符-的优先级
+        }
+
+        while(begin < end)
+        {
+            //遍历，搜索有效的字母
+            while(begin < end && !isVaild(s[begin]))
+                ++begin;
+            while(begin < end && !isVaild(s[end]))
+                --end;
+            if(s[begin] != s[end])
+                return false;
+            ++begin;
+            --end;
+        }
+        return true;
+    }
+};
+时间复杂度：O(n)，n是字符串的长度。
+空间复杂度：O(1)，没有使用额外的空间。
+```
+
+
+
+## 415.字符串相加
+
+题目：
+
+给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和并同样以字符串形式返回。
+
+你不能使用任何內建的用于处理大整数的库（比如 BigInteger）， 也不能直接将输入的字符串转换为整数形式。
+
+提示：
+
+1 <= num1.length, num2.length <= 104。
+
+num1 和num2 都只包含数字 0-9。
+
+num1 和num2 都不包含任何前导零。 
+
+```c++
+示例1：
+输入：num1 = "11", num2 = "123"
+输出："134"
+
+示例2：
+输入：num1 = "456", num2 = "77"
+输出："533"
+
+示例3：
+输入：num1 = "0", num2 = "0"
+输出："0"
+```
+
+```c++
+方法1：头插
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        //从字符串的最后额开始相加：低位相加
+        int end1 = num1.size() - 1;
+        int end2 = num2.size() - 1;
+        
+        int next = 0;   //进位
+        string res;     //最终结果
+        //循环次数：最长字符串的次数
+        while(end1 >= 0 || end2 >= 0)
+        {
+            //每一位的和 = 对应位的和 和 进位
+            int curSum = next;
+            //判断当前位是否存在
+            if(end1 >= 0)
+                curSum += num1[end1--] - '0';	//这里将字符转换为数字差值，这里需要计算的是值
+            if(end2 >= 0)
+                curSum += num2[end2--] - '0';
+            
+            //判断是否有进位
+            if(curSum > 9)
+            {
+                curSum -= 10;
+                next = 1;
+            }
+            else
+                next = 0;           //这里不要忘记
+
+            //保存当前位的结果
+            //头插  或者    尾插，最后进行翻转
+            //头插
+            res.insert(0, 1, curSum + '0');       //给索引为0的位置插入一个字符（头插）
+            //res.insert(res.begin(), 1 + '0');	  //insert + 迭代器
+        }
+
+        //查看最高位是否有进位
+        if(next == 1)
+            res.insert(0, 1, 1 + '0');			//这里需要插入的是字符
+
+        return res;
+    }
+};
+时间复杂度：O(n^2)。（insert/尾插的时间复杂度是O(n)）
+空间复杂度：O(1)，没有使用额外空间。
+```
+
+```c++
+方法2：尾插 + 翻转(逆序)
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+
+    	//字符串最后一位 
+    	int end1 = num1.size() - 1;
+    	int end2 = num2.size() - 1;
+
+    	//进位
+    	int next = 0;
+    	string res = "";
+
+    	while(end1 >= 0 || end2 >= 0 || next != 0)
+    	{
+        	int x = end1 >= 0 ? num1[end1] - '0' : 0;        
+        	int y = end2 >= 0 ? num2[end2] - '0' : 0;
+        	int sumCur = x + y + next;
+        	res.push_back(sumCur % 10 + '0');
+        	next = sumCur / 10;
+        	end1--;
+        	end2--;
+    	}
+
+    	//翻转结果
+    	reverse(res.begin(),res.end());
+
+    	return res;
+    }
+};
+时间复杂度：O(n^2)。（里面的strcpy函数的时间复杂度是O(n)。）
+空间复杂度：O(n)。（里面的strcpy函数的时间复杂度是O(n)。）
+```
+
+```c++
+方法3：另外一种尾插，也是尾插 + 逆序(翻转)
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        //从字符串的最后一位开始相加
+        int end1 = num1.size() - 1;
+        int end2 = num2.size() - 1;
+
+        //进位
+        int next = 0;
+
+        //最终结果
+        string res = "";
+        //判断需要的长度
+        int len = end1 > end2 ? end1 + 2 : end2 + 2;
+        res.reserve(len);     //res的长度为len，这里预留空间仅仅只是为了提高性能，没有也不影响结果。
+
+        //循环次数，最长字符串的次数
+        while(end1 >= 0 || end2 >= 0)
+        {
+            //每一位的和：对应位的值和进位
+
+            //进位
+            int curSum = next;
+            //每一位的值
+            //判断当前位是否存在
+            if(end1 >= 0)
+                curSum += num1[end1--] -'0';
+            if(end2 >= 0)
+                curSum += num2[end2--] -'0';
+
+            //判断是否有进位
+            if(curSum > 9)
+            {
+                next = 1;
+                curSum -= 10;
+            }
+            else
+                next = 0;
+
+            //保存当前位的结果：头插
+            //res.insert(0,1,curSum + '0'); 
+
+            //尾插
+            res += curSum + '0'; 
+
+            //end1--;
+            //end2--;
+        }
+
+        //查看最高位是否有进位
+        if(next == 1)
+            //ret.insert(0,1,'1');
+            res += '1';
+
+        //尾插之后，结果逆序，逆置
+        reverse(res.begin(),res.end());
+
+        return res;
+    }
+};
+时间复杂度：O(n^2)。（里面的strcpy函数的时间复杂度是O(n)。）
+空间复杂度：O(n)。（里面的strcpy函数的时间复杂度是O(n)。）
+```
+
+
+
+## 541.反转字符串||
+
+题目：
+
+给定一个字符串 s 和一个整数 k，从字符串开头算起，每计数至 2k 个字符，就反转这 2k 字符中的前 k 个字符。
+
+如果剩余字符少于 k 个，则将剩余字符全部反转。
+如果剩余字符小于 2k 但大于或等于 k 个，则反转前 k 个字符，其余字符保持原样。
+
+ **提示：**
+
+- `1 <= s.length <= 104`
+- `s` 仅由小写英文组成
+- `1 <= k <= 104`
+
+```c++
+示例 1：
+输入：s = "abcdefg", k = 2
+输出："bacdfeg"
+
+示例 2：
+输入：s = "abcd", k = 2
+输出："bacd"
+```
+
+理解题目：就是每隔k个字符进行翻转。
+
+```c++
+方法1：使用reverse函数 + 迭代器。
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+        int n = s.size();
+        for(int i = 0; i < n; i += 2*k)
+        {
+            reverse(s.begin() + i, s.begin() + min(i + k, n));
+        }
+        return s;
+    }
+};
+```
+
+```c++
+方法2：按照普通翻转字符串自己实现my_reverse函数
+class Solution {
+public:
+    void my_reverse(string& s, int start, int end)
+    {
+        while(start < end)
+        {
+            int temp = s[start];
+            s[start] = s[end];
+            s[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    string reverseStr(string s, int k) {
+        int n = s.size();
+        for(int i = 0; i < n; i += 2*k)
+        {
+            my_reverse(s, i, min(i + k - 1, n - 1));
+        }
+        return s;
+    }
+};
+```
+
+```c++
+//方法3：分情况
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+        for (int i = 0; i < s.size(); i += (2 * k)) {
+            // 1. 每隔 2k 个字符的前 k 个字符进行反转
+            // 2. 剩余字符小于 2k 但大于或等于 k 个，则反转前 k 个字符
+            if (i + k <= s.size()) {
+                reverse(s.begin() + i, s.begin() + i + k );
+                continue;
+            }
+            // 3. 剩余字符少于 k 个，则将剩余字符全部反转。
+            reverse(s.begin() + i, s.begin() + s.size());
+        }
+        return s;
+    }
+};
+```
+
+
+
+## 557.反转字符串中的单词|||
+
+题目：
+
+给定一个字符串 `s` ，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+
+提示：
+
+1 <= s.length <= 5 * 104
+s 包含可打印的 ASCII 字符。
+s 不包含任何开头或结尾空格。
+s 里 至少 有一个词。
+s 中的所有单词都用一个空格隔开。 
+
+```c++
+示例 1：
+输入：s = "Let's take LeetCode contest"
+输出："s'teL ekat edoCteeL tsetnoc"
+
+示例 2:
+输入： s = "God Ding"
+输出："doG gniD"
+```
+
+```c++
+方法1：原地修改，不需要额外空间
+class Solution {
+public:
+    void my_reverse(string& s, int start, int end) 
+    {
+        while(start < end)
+        {
+            swap(s[start], s[end]);
+            start++;
+            end--;
+        }
+    }
+
+    string reverseWords(string s) {
+        //去除两端空格
+        while(s[0] == ' ')
+            s.erase(0, 1);              //如果首字符是空格，删除首字符
+        
+        while(s[s.size() - 1] == ' ')
+            s.erase(s.size() - 1, 1);   //如果尾字符是空格，删除尾字符
+
+        //翻转每个单词
+        int begin = 0;
+        int end = 0;
+        int len = s.size();
+        while(end < len)
+        {
+            //统计每个单词有几个字母
+            while(end < len && s[end] != ' ')
+                end++;
+            my_reverse(s, begin, end - 1);      //翻转每个单词
+            
+            //这里是每个单词之间只有1个空格的时候适用
+            //begin = end + 1;       
+            //end = begin;
+
+            //下面的适用于每个单词之间有多个空格
+            while(end < len && s[end] == ' ')
+                end++;
+            begin = end;
+        }
+
+        return s;
+    }
+};
+```
+
+```c++
+方法2：需要额外空间
+class Solution {
+public:
+    string reverseWords(string s) {
+        string res; //要返回的字符串
+        //去除两端空格
+        while(s[0] == ' ')
+            s.erase(0, 1);              //如果首字符是空格，删除首字符
+        
+        while(s[s.size() - 1] == ' ')
+            s.erase(s.size() - 1, 1);   //如果尾字符是空格，删除尾字符
+
+        int len = s.size();
+        int end = 0;
+        while(end < len)
+        {
+            int start = end;
+            //统计每个单词的长度
+            while(end < len && s[end] != ' ')
+                end++;
+
+            int slen = end;     //记录每个单词的长度
+
+            while(start < slen)
+            {
+                res.push_back(s[slen - 1]);
+                slen--;
+            }
+
+            while(end < len && s[end] == ' ')
+                end++;
+
+            //删除最后一个空格在这里直接处理了，不是最后一个单词才加空格
+            if(end != len)
+                res.push_back(' ');
+        }
+
+        //res.erase(res.size() - 1, 1);    //删除最后一个空格
+
+        return res;
+    }
+};
+```
+
+```c++
+方法3：直接使用迭代器交换接口实现
+class Solution {
+public:
+    string reverseWords(string s) {
+        string res; //要返回的字符串
+        //去除两端空格
+        while(s[0] == ' ')
+            s.erase(0, 1);              //如果首字符是空格，删除首字符
+        
+        while(s[s.size() - 1] == ' ')
+            s.erase(s.size() - 1, 1);   //如果尾字符是空格，删除尾字符
+
+        int len = s.size();
+        int start = 0;
+        int end = 0;
+        while(end < len)
+        {
+            //统计每个单词的长度
+            while(end < len && s[end] != ' ')
+                end++;
+            int next = end + 1;     //记录下一个位置，防止迭代器失效问题。 
+
+            //这里需要考虑迭代器失效问题，重置迭代器
+            reverse(s.begin() + start, s.begin() + end);        //注意点：这里要记住reverse不是string类的成员函数。
+
+            start = next; 
+            end = next;
+
+            while(end < len && s[end] == ' ')
+                end++;
+        }
+
+        return s;
+    }
+};
+
+
+//一种不好理解的处理迭代器失效的代码
+class Solution {
+public:
+    string reverseWords(string s) {
+        int mark = 0, i = 0, count = 0;
+        //去除两端空格
+        while(s[0] == ' ')
+            s.erase(0, 1);              //如果首字符是空格，删除首字符
+        
+        while(s[s.size() - 1] == ' ')
+            s.erase(s.size() - 1, 1);   //如果尾字符是空格，删除尾字符
+
+        for (i = 0; i < s.size(); ++i) 
+        {
+            if (s[i] == ' ') 
+            {
+                reverse(s.begin() + mark, s.begin() + i);
+                mark = i + 1;
+            } 
+        }
+
+        reverse(s.begin() + mark, s.end());     //处理迭代器失效问题
+        
+        return s;
+    }
+};
+```
+
+```c++
+方法4：使用栈实现，使用双端队列的思路和栈的代码实现几乎一样。
+class Solution {
+public:
+    string reverseWords(string s) {
+        string res = "";        //要返回的字符串，空字符串
+        //去除两端空格
+        while(s[0] == ' ')
+            s.erase(0, 1);              //如果首字符是空格，删除首字符
+        
+        while(s[s.size() - 1] == ' ')
+            s.erase(s.size() - 1, 1);   //如果尾字符是空格，删除尾字符
+
+        stack<char> sk;
+        for(int ch : s)
+        {
+            if(ch == ' ')
+            {
+                while(!sk.empty())
+                {
+                    res += sk.top();
+                    sk.pop();
+                }
+                res +=' ';
+            }
+            else 
+                sk.push(ch);
+        }
+
+        //处理字符串中的最后一个单词
+        while(!sk.empty())
+        {
+            res += sk.top();
+            sk.pop();
+        } 
+
+        return res;
+    }
+};
+```
+
+
+
+## 43.字符串相乘
+
+题目：
+
+给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。
+
+注意：不能使用任何内置的 BigInteger 库或直接将输入转换为整数。 
+
+提示：
+
+1 <= num1.length, num2.length <= 200
+
+num1 和 num2 只能由数字组成。
+
+num1 和 num2 都不包含任何前导零，除了数字0本身。 
+
+```c++
+示例 1:
+输入: num1 = "2", num2 = "3"
+输出: "6"
+
+示例 2:
+输入: num1 = "123", num2 = "456"
+输出: "56088"
+```
+
+```c++
+
+```
+
+```c++
+
+```
+
+
+
+
+
+# 5.string类的模拟实现
+
+## 5.1浅拷贝
+
+浅拷贝：也称位拷贝，编译器只是将对象中的值拷贝过来。如果对象中管理资源，最后就会导致多个对象共享同一
+
+份资源，当一个对象销毁时就会将该资源释放掉，而此时另一些对象不知道该资源已经被释放，以为还有效，所以 
+
+当继续对资源进行操作时，就会发生了访问违规。要解决浅拷贝问题，C++中引入了深拷贝。
+
+
+
+## 5.2深拷贝
+
+如果一个类中涉及到资源的管理，其拷贝构造函数、赋值运算符重载以及析构函数必须要显式给出。一般情况都是
+
+按照深拷贝方式提供。
+
+
+
+## 5.3string类的传统写法
+
+实现string类的构造、拷贝构造、赋值运算符重载以及析构函数。
+
+```c++
+//string类的传统写法：实现string类的构造、拷贝构造、赋值运算符重载以及析构函数。
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//传统写法
+class String
+{
+public:
+	/*
+	String()
+		:_data(new char[1])
+	{
+		_data[0] = '\0';
+	}
+	*/
+
+	//缺省构造函数做默认构造函数
+	//错误的写法:
+	//String(const char* str = nullptr)
+	//String(const char* str = "\0")
+	String(const char* str = "")
+		:_data(new char[strlen(str) + 1])	//char* _data = new char[strlen(str) + 1]
+	{
+		strcpy(_data, str);
+	}
+
+	/*
+	//浅拷贝：只拷贝对象的内容，不拷贝对象的资源
+	String(const String& str)
+		:_data(str._data)
+	{}
+	*/
+
+	//深拷贝；拷贝对象的内容 + 对象的资源
+	String(const String& str)
+		:_data(new char[strlen(str._data) + 1])
+	{
+		strcpy(_data, str._data);
+	}
+
+	//赋值运算符
+	String& operator=(const String& str)
+	{
+		if (this != &str)
+		{
+			//释放原有的资源空间，防止被拷贝资源的空间大于当前资源的空间
+			delete[] _data;
+			//开新的资源空间
+			_data = new char[strlen(str._data) + 1];
+			//拷贝内容
+			strcpy(_data, str._data);
+		}
+		return *this;
+	}
+
+	//以c语言的方式打印字符串，返回值是地址
+	const char* c_str() const
+	{
+		return this->_data;
+	}
+
+	//析构函数
+	~String()
+	{
+		if (_data)
+		{
+			delete[] _data;
+			_data = nullptr;
+		}
+	}
+
+private:
+	char* _data;
+};
+
+int main()
+{
+	//默认构造
+	String s = "1234";
+	String s2("abcde");
+	//拷贝构造
+	String copy(s);
+	//赋值运算符
+	s = s2;
+	cout << s.c_str() << endl;
+	return 0;
+}
+//输出结果：
+//abcde
+```
+
+
+
+## 5.4string类的现代版写法
+
+```c++
+//string类的传统写法：实现string类的构造、拷贝构造、赋值运算符重载以及析构函数。
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//现代写法
+class my_string
+{
+public:
+	my_string(const char* str = "")
+		:_data(new char[strlen(str) + 1])
+	{
+		strcpy(_data, str);
+	}
+
+	//拷贝构造：复用拷贝
+	//借助构造函数在创建局部对象的时候进行空间申请 + 内容拷贝
+	//通过交换成员，最终达到拷贝构造的目的
+	my_string(const my_string& str)
+		:_data(nullptr)					//不存在释放的问题
+	{
+		my_string tmp(str._data);		//调用默认构造
+		swap(_data, tmp._data);
+	}
+
+	//赋值运算符
+	/*
+	my_string& operator=(const my_string& str)
+	{
+		my_string tmp(str._data);
+		swap(_data, tmp._data);
+		return *this;
+	}
+	*/
+	//最简单的写法
+	//赋值运算符：复用拷贝
+	//借助拷贝构造函数在创建形参对象的时候进行空间申请 + 内容拷贝
+	//借助局部对象的析构函数完成当前对象原有资源的释放
+	my_string& operator=(my_string str)		//值传递调用拷贝构造
+	{
+		//不写if(this != &str)的原因：值传递，地址肯定不相等（自己给自己赋值比较少见）
+		swap(_data, str._data);
+		return *this;
+	}
+
+	//以c语言的方式打印字符串，返回值是地址
+	const char* c_str() const
+	{
+		return this->_data;
+	}
+
+	~my_string()
+	{
+		if (_data)
+		{
+			delete[] _data;
+			_data = nullptr;
+		}
+	}
+
+private:
+	char* _data;
+};
+
+int main()
+{
+	//默认构造
+	my_string s = "1234";
+	my_string s2("abcde");
+	//拷贝构造
+	my_string copy(s);
+	//赋值运算符
+	s = s2;
+	cout << s.c_str() << endl;
+	return 0;
+}
+//输出结果：
+//abcde
+```
+
+
+
+## 5.5写时拷贝技术
+
+写时拷贝（Copy-On-Write，简称COW）是一种延迟复制技术，常用于操作系统中的进程间通信、文件系统、虚
+
+拟内存等场景。
+
+写时拷贝的实现方法主要是在创建新对象时不立即执行复制操作，而是将新对象与原始对象共享同一份数据，并将
+
+其引用计数加1。当需要修改这份数据时，才会执行实际的复制操作，将数据复制到新的内存中，并更新引用计
+
+数。这样可以减少不必要的复制操作，节省空间和时间，提高程序的性能。
+
+例如，考虑以下代码片段：
+
+```c++
+string str1 = "hello world";
+string str2 = str1;
+```
+
+在执行 `str2 = str1` 时，并不会立即对字符串进行复制操作，而是使 `str2` 与 `str1` 共享同一份字符串数据，同
+
+时将引用计数设置为2。只有在其中一个字符串需要进行修改操作时，才会执行实际的复制操作。
+
+写时拷贝的优点主要有以下几个：
+
+1. 节省空间：延迟复制可以避免不必要的内存分配和数据复制，减少占用的内存空间。
+2. 提高效率：延迟复制可以避免不必要的复制操作，降低程序的时间复杂度，提高程序的性能。
+3. 更安全：延迟复制可以避免在多线程环境下出现数据竞争，提高系统的稳定性和安全性。
+
+但同时，写时拷贝的缺点也值得注意，主要有以下几个：
+
+1. 内部维护引用计数需要一定的开销。
+2. 在修改共享数据时，需要执行实际的复制操作，可能会导致较长时间的等待和内存分配操作。
+3. 在多线程环境下，需要使用锁等同步机制来保证数据的一致性，可能会影响程序的并发性能。
+
+写时拷贝就是一种拖延症，是在浅拷贝的基础之上增加了引用计数的方式来实现的。
+
+引用计数：用来记录资源使用者的个数。初始化为0，在构造时，将资源的计数给成1，每增加一个对象使用该资
+
+源，就给计数增加1，当某个对象被销毁时，先给该计数减1，然后再检查是否需要释放资源，如果计数为1，说明
+
+该对象是资源的最后一个使用者，将该资源释放；否则就不能释放，因为还有其他对象在使用该资源。
+
+
+
+## 5.6线性表管理字符串
+
+```c++
+//string类的传统写法：实现string类的构造、拷贝构造、赋值运算符重载以及析构函数。
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <assert.h>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+//线性表管理字符串
+class String
+{
+	//friend String operator+(const String& str1, const String& str2);
+	//friend String operator+(const char* str1, const String& str2);
+	//friend String operator+(const char ch, const String& str2);
+public:
+	//String迭代器 
+	//实现：字符指针
+	typedef char* iterator;
+	typedef const char* const_iterator;
+
+	iterator begin()
+	{
+		//第一个元素的位置
+		return _data;
+	}
+
+	const_iterator begin() const
+	{
+		//第一个元素的位置
+		return _data;
+	}
+
+	iterator end()
+	{
+		//最后一个元素的下一个位置
+		return _data + _size;
+	}
+
+	const_iterator end() const
+	{
+		//最后一个元素的下一个位置
+		return _data + _size;
+	}
+
+	String(const char* str = "")
+		:_size(strlen(str))
+		, _capacity(_size)
+		, _data(new char[_size + 1])
+	{
+		strcpy(_data, str);
+	}
+
+	String(const String& str)
+		:_size(0)
+		, _capacity(0)
+		, _data(nullptr)
+	{
+		String tmp(str._data);
+		Swap(tmp);
+	}
+
+	void Swap(String& str)
+	{
+		swap(_size, str._size);
+		swap(_capacity, str._capacity);
+		swap(_data, str._data);
+	}
+
+	String& operator=(String str)		//值拷贝，交换
+	{
+		Swap(str);
+		return *this;
+	}
+
+	~String()
+	{
+		if (_data)
+		{
+			delete[] _data;
+			_data = nullptr;
+			//下面的不给没有关系
+			_size = 0;
+			_capacity = 0;
+		}
+	}
+
+	size_t size() const
+	{
+		return _size;
+	}
+
+	size_t capacity() const
+	{
+		return _capacity;
+	}
+
+	char& operator[](size_t pos)
+	{
+		assert(pos < _size);		//断言只在debug版本下有效，正式版本下无效
+		return _data[pos];
+	}
+
+	const char& operator[](size_t pos) const
+	{
+		assert(pos < _size);		//断言只在debug版本下有效，正式版本下无效
+		return _data[pos];
+	}
+
+	//按c语言格式输出字符串
+	const char* c_str() const
+	{
+		return _data;
+	}
+
+	void push_back(const char& ch)
+	{
+		//没有空余空间扩容
+		if (_size == _capacity)
+		{
+			size_t newc = _capacity == 0 ? 15 : 2 * _capacity;
+			reserve(newc);			//提前预留空间
+		}
+		_data[_size] = ch;
+		_size++;
+		_data[_size] = '\0';	//不要忘记'\0'
+	}
+
+	//提前预留空间
+	void reserve(size_t n)
+	{
+		//只增加容量
+		if (n > _capacity)
+		{
+			//1.开空间
+			char* tmp = new char[n + 1];
+			//2.拷贝
+			strcpy(tmp, _data);
+			//3.释放原有空间
+			delete[] _data;
+			//4.更新
+			_data = tmp;
+			_capacity = n;
+		}
+	}
+
+	/*
+	//加上异常处理reserve实现
+	void reserve(size_t new_cap)
+	{
+		if (new_cap <= capacity()) 
+		{
+			return; //如果新容量小于等于当前容量，则无需分配
+		}
+
+		char *new_data = nullptr;
+		try 
+		{
+			// 申请新的内存空间
+			new_data = new char[new_cap + 1];
+		}
+		
+		catch (std::bad_alloc&) 
+		{
+			throw std::length_error("std::string::reserve() failed to allocate memory");
+		}
+
+		//拷贝原有数据到新的内存空间
+		std::memcpy(new_data, _data, length() + 1);
+
+		//释放原有内存空间
+		delete[] data_;
+
+		// 更新指针和容量信息
+		data_ = new_data;
+		cap_ = new_cap;
+	}
+	*/
+
+	//调整大小
+	void resize(size_t n, const char& ch = '\0')
+	{
+		//n > _capacity	增容
+		if (n > _capacity)
+		{
+			reserve(n);
+		}
+		//_size < n <= _capacity	填充字符'\0'
+		if (n > _size)
+		{
+			//for (size_t pos = _size; pos < n; ++pos)
+			//	_data[pos] = ch;
+			//推荐使用memset，比for循环高效
+			memset(_data + _size, ch, sizeof(char) * (n - _size));		//参数：起始位置、覆盖的字符、覆盖的区域/范围
+		}
+
+		//n <= _size;	截取位置'\0'
+		_size = n;
+		_data[_size] = '\0';
+	}
+
+	//拼接或追加
+	void append(const char* str)
+	{
+		//1.检查容量
+		int len = strlen(str);
+		if (_size + len > _capacity)
+		{
+			reserve(_size + len);
+		}
+
+		//2.插入
+		memcpy(_data + _size, str, sizeof(char) * len);		//memcpy效率高，strcpy要走循环的
+		//或者strcpy(_data + _size, str);
+		//strcpy不需要再加'\0'，会直接把'\0'拷贝进去，memcpy需要加'\0'
+
+		//3.更新
+		_size += len;
+		_data[_size] = '\0';
+	}
+
+	String& operator+=(const String& str)
+	{
+		append(str._data);
+		return *this;
+	}
+
+	String& operator+=(const char* str)
+	{
+		append(str);
+		return *this;
+	}
+
+	String& operator+=(const char ch)
+	{
+		push_back(ch);
+		return *this;
+	}
+
+	void insert(size_t pos, const char& ch)
+	{
+		//保证位置有效
+		assert(pos <= _size);			//pos == _size相当于尾插
+
+		//1.检查容量
+		if (_size == _capacity)
+		{
+			size_t newc = _capacity == 0 ? 15 : 2 * _capacity;
+			reserve(newc);
+		}
+
+		//2.移动元素：从后向前移动
+		size_t end = _size + 1;		//先移动'\0'
+		while (end > pos)
+		{
+			_data[end] = _data[end - 1];
+			--end;
+		}
+
+		//3.插入
+		_data[pos] = ch;
+
+		//4.更新
+		_size++;
+	}
+
+	void insert(size_t pos, const char* str)
+	{
+		//检查插入位置是否有效
+		assert(pos <= _size);
+		int len = strlen(str);
+
+		//检查容量
+		if (_size + len > _capacity)
+		{
+			reserve(_size + len);
+		}
+
+		//移动
+		size_t end = _size + len;
+		while (end > pos + len - 1)
+		{
+			_data[end] = _data[end - len];
+			--end;
+		}
+
+		//拷贝
+		memcpy(_data + pos, str, sizeof(char) * len);
+		//for (int i = 0; i < len; i++)
+		//{
+		//	_data[pos + i] = str[i];
+		//}
+		//更新
+		_size += len;
+	}
+
+	//从索引pos位置开始删除len个元素
+	void erase(size_t pos, size_t len = npos)
+	{
+		//不传第二个参数就是从索引pos开始删除后面所有的元素，就是在pos位置放置'\0'
+		if (len == npos || pos + len >= _size)
+		{
+			_size = pos;
+			_data[_size] = '\0';
+		}
+		else
+		{
+			//正常情况
+			size_t begin = pos + len;
+			while (begin <= _size)
+			{
+				_data[begin - len] = _data[begin];
+				++begin;
+			}
+			_size -= len;
+		}
+	}
+
+	//从第pos个位置开始，进行查找元素ch，找到了返回找到元素的索引，没有找到返回npos
+	size_t find(const char& ch, size_t pos = 0)
+	{
+		assert(pos < _size);
+		for (size_t i = pos; i < _size; ++i)
+		{
+			if (_data[i] == ch)
+				return i;
+		}
+		//未找到或者越界了都属于找不到
+		return npos;	//越界了直接返回无符号整数的最大值
+	}
+
+	//从第pos个位置开始，进行查找子字符串str，找到了返回找到元素的索引，没有找到返回npos
+	size_t find(const char* str, size_t pos = 0)
+	{
+		assert(pos < _size);
+		char* ptr = strstr(_data + pos, str);		//c语言的
+		//如果ptr是nullptr说明不存在
+		if (ptr)
+			return ptr - _data;		//相较于_data字符串的起始位置的偏移量。（两个指针相减的结果是它们之间的偏移量。）
+		else
+			return npos;		//没找到
+	}
+
+	//字符串截取：从pos开始截取len个字符
+	String substr(size_t pos, size_t len = npos)
+	{
+		assert(pos < _size);
+		if (len == npos || pos + len > _size)		//短路防止溢出
+		{
+			String str(_data + pos);
+			return str;
+			//String(_data + pos);		//或者返回匿名对象
+		}
+		else
+		{
+			char* newc = new char[len + 1];
+			memcpy(newc, _data + pos, sizeof(char) * len);
+			newc[len] = '\0';
+			return String(newc);
+			delete[] newc;
+		}
+	}
+
+private:
+	size_t _size;
+	size_t _capacity;
+	char* _data;
+	static const size_t npos;
+};
+
+const size_t String::npos = -1;		//正的最大值
+
+//不涉及String类的成员
+String operator+(const String& str1, const String& str2)
+{
+	String str = str1;
+	str += str2;
+	return str;
+}
+
+String operator+(const char* str1, const String& str2)
+{
+	String str(str1);
+	str += str2;
+	return str;
+}
+
+String operator+(const char ch, const String& str2)
+{
+	String str = str2;
+	str += ch;
+	return str;
+}
+
+//字符串比较
+bool operator<(const String& str1, const String& str2)
+{
+	int ret = strcmp(str1.c_str(), str2.c_str());			//ASILL比较（逐字符比较）
+	if (ret < 0)
+		return true;
+	return false;
+}
+
+bool operator==(const String& str1, const String& str2)
+{
+	int ret = strcmp(str1.c_str(), str2.c_str());
+	if (ret == 0)
+		return true;
+	return false;
+}
+
+bool operator<=(const String& str1, const String& str2)
+{
+	return str1 < str2 || str1 == str2;
+}
+
+bool operator>(const String& str1, const String& str2)
+{
+	return !(str1 <= str2);
+}
+
+bool operator>=(const String& str1, const String& str2)
+{
+	return !(str1 < str2);
+}
+
+bool operator!=(const String& str1, const String& str2)
+{
+	return !(str1 == str2);
+}
+
+ostream& operator<<(ostream& cou, const String& str)
+{
+	for (const auto& c : str)
+		cou << c << " ";
+	return cou;
+}
+
+istream& operator>>(istream& cin, String& str)
+{
+	char ch;
+	while (ch = cin.get())		//也可以使用getchar
+	//while ((ch = cin.get()) != EOF)
+	//while ((ch = getchar()) != EOF)
+	{
+		if (ch == ' ' || ch == '\n')
+			break;
+		//尾插
+		str += ch;
+	}
+	return cin;
+	//char ch1, ch2;			
+	//cin.get(ch1).get(ch2);		//连续读取两个字符
+}
+
+int main()
+{
+	String s = "1234567890";
+	s.push_back('5');		//12345678905
+	for (int i = 0; i < s.size(); i++)
+	{
+		cout << s[i] << " ";		//1 2 3 4 5  6 7 8 9 0 5
+	}
+	cout << endl;
+
+	for (const auto& c : s)
+		cout << c << " ";			//1 2 3 4 5  6 7 8 9 0 5
+	cout << endl;
+
+	String::iterator it = s.begin();
+	cout << *it << endl;			//1
+
+	s.resize(20, 'a');
+	for (const auto& c : s)
+		cout << c << " ";			//1 2 3 4 5 6 7 8 9 0 5 a a a a a a a a a
+	cout << endl;
+
+	s.append("wwjjwc");
+	for (const auto& c : s)
+		cout << c << " ";			//1 2 3 4 5 6 7 8 9 0 5 a a a a a a a a a w w j j w c
+	cout << endl;
+
+	s += "jbs";
+	for (const auto& c : s)
+		cout << c << " ";			//1 2 3 4 5 6 7 8 9 0 5 a a a a a a a a a w w j j w c j b s
+	cout << endl;
+
+	String s1 = "1245";
+	s1.insert(2, '3');			//在索引为2的位置插入数字3
+	for (const auto& ch : s1)
+		cout << ch << " ";			//1 2 3 4 5
+	cout << endl;
+
+	s1.resize(20);
+	cout << s1 << "end" << endl;			//1 2 3 4 5                end			//会输出'\0'，按字符逐个输出
+	cout << s1.c_str() << "end" << endl;	//12345end								//不会输出'\0'，输出字符串
+
+	String str;
+	cin >> str;
+	cout << str << endl;
+	//输入：123 4 5
+	//输出：1 2 3
+	return 0;
+}
+//输出结果：
+//1 2 3 4 5 6 7 8 9 0 5
+//1 2 3 4 5 6 7 8 9 0 5
+//1
+//1 2 3 4 5 6 7 8 9 0 5 a a a a a a a a a
+//1 2 3 4 5 6 7 8 9 0 5 a a a a a a a a a w w j j w c
+//1 2 3 4 5 6 7 8 9 0 5 a a a a a a a a a w w j j w c j b s
+//1 2 3 4 5
+//1 2 3 4 5                end
+//12345end
+//输入：abc d e
+//a b c
+```
+
+
+
+# 6.string中要记忆的单词：
+
+substr	字符串的子串	字符串截取
+
+insert	插入			插入			(记住在string中有push_back)
+
+erase	删除			删除
+
+reverse	反向			反向迭代器（reverse_iterator）
+
+resize	调整			调整实际大小
+
+reserve	储备			调整空间容量（只有往大调有效）
+
+assign	分配			赋值
+
+append	附加			追加字符串（字符串可以是汉字）
+
+replace	替换			替换
+
+compare	比较			比较
+
+at		在				存取
+
+
+
+# 7.string遇到的问题
+
+编译器生成的string容器的拷贝函数是深拷贝。

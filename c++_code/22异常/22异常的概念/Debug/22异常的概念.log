@@ -1,0 +1,5 @@
+﻿  1.异常的概念.cpp
+c:\users\19827\desktop\计算机\code\c++_code\22异常\22异常的概念\1.异常的概念.cpp(27): warning C4101: “err”: 未引用的局部变量
+c:\users\19827\desktop\计算机\code\c++_code\22异常\22异常的概念\1.异常的概念.cpp(35): warning C4101: “d”: 未引用的局部变量
+c:\users\19827\desktop\计算机\code\c++_code\22异常\22异常的概念\1.异常的概念.cpp(65): warning C4101: “i”: 未引用的局部变量
+  22异常的概念.vcxproj -> C:\Users\19827\Desktop\计算机\code\c++_code\22异常\Debug\1异常的概念.exe

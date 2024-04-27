@@ -1,0 +1,40 @@
+﻿  double_list.c
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(36): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(47): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(48): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(49): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(50): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(44): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(64): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(65): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(61): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(62): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(75): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(76): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(77): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(78): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(73): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(84): warning C4133: “==”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(88): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(89): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(86): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(87): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(102): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(103): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(99): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(100): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(114): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(115): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(116): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(117): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(112): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(127): warning C4133: “=”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(123): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(139): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(142): warning C4133: “初始化”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(173): warning C4133: “函数”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(174): warning C4133: “函数”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(177): warning C4133: “函数”: 从“listNode *”到“listNode *”的类型不兼容
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(178): warning C4133: “函数”: 从“listNode *”到“listNode *”的类型不兼容
+  double_list.vcxproj -> C:\Users\19827\Desktop\计算机\code\data_structure_code\data_structure\x64\Debug\double_list.exe
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\double_list\double_list.c(23): warning C6011: 取消对 NULL 指针“node”的引用。

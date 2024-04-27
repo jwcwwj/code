@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//顺序结构实现栈
+typedef int STDataType;
+
+typedef struct stack
+{
+	STDataType* _data;
+	int _size;
+	int _capacity;
+}stack;
+
+void checkCapacityStack(stack* s)
+{
+	if (s->_size == s->_capacity)
+	{
+		int newCapacity = (s->_capacity == 0 ? 1 : 2 * s->_capacity);
+		s->_data = (STDataType*)realloc(s->_data, sizeof(STDataType) * newCapacity);
+		s->_capacity = newCapacity;
+	}
+}
+
+//栈的初始化
+void initStack(stack* s)
+{
+	if (s == NULL)
+		return;
+	s->_data = NULL;
+	s->_capacity = s->_size = 0;
+}
+
+//入栈
+void pushStack(stack* s, STDataType val)
+{
+	//尾插
+	if (s == NULL)
+		return;
+	//checkCapacity(s);
+	checkCapacityStack(s);
+	s->_data[s->_size++] = val;
+}
+
+//出栈
+void popStack(stack* s)
+{
+	if (s == NULL)
+		return;
+	//尾删
+	if (s->_size > 0)
+		--s->_size;
+}
+
+//获取栈顶元素
+STDataType getTopStack(stack* s)
+{
+	return s->_data[s->_size - 1];
+}
+
+//判断栈是否为空
+int emptyStack(stack* s)
+{
+	if (s == NULL || s->_size == 0)
+		return 1;
+	return 0;
+}
+
+//遍历栈顶元素
+void printStack(stack* s)
+{
+	if (s == NULL)
+		return;
+	while(!emptyStack(s))
+	{
+		printf("%d ", getTopStack(s));
+		popStack(s);
+	}
+	printf("\n");
+}
+
+//获取栈的长度
+int sizeStack(stack* s)
+{
+	if (s == NULL)
+		return 0;
+	return s->_size;
+}
+
+int main()
+{
+	stack st;
+	initStack(&st);
+	pushStack(&st, 1);
+	pushStack(&st, 2);
+	pushStack(&st, 3);
+	pushStack(&st, 4);
+	//printStack(&st);	//4 3 2 1	//这里的测试是出栈，对栈的结构有影响
+	popStack(&st);
+	popStack(&st);
+	printStack(&st);	//2 1
+	return 0;
+}

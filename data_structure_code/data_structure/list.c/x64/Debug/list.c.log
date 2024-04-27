@@ -1,0 +1,5 @@
+﻿  list.c
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\list.c\list.c(79): warning C4553: “==”: 未使用表达式结果；是否打算使用“=”?
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\list.c\list.c(92): warning C4553: “==”: 未使用表达式结果；是否打算使用“=”?
+  list.c.vcxproj -> C:\Users\19827\Desktop\计算机\code\data_structure_code\data_structure\x64\Debug\list.exe
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\list.c\list.c(34): warning C6011: 取消对 NULL 指针“node”的引用。

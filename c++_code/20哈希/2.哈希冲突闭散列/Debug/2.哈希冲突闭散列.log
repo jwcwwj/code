@@ -1,0 +1,6 @@
+﻿  2.哈希冲突闭散列.cpp
+c:\users\19827\desktop\计算机\code\c++_code\20哈希\2.哈希冲突闭散列\2.哈希冲突闭散列.cpp(82): warning C4018: “<”: 有符号/无符号不匹配
+  c:\users\19827\desktop\计算机\code\c++_code\20哈希\2.哈希冲突闭散列\2.哈希冲突闭散列.cpp(71): note: 编译 类 模板 成员函数 "void HashTable<int,int>::checkCapacity(void)" 时
+  c:\users\19827\desktop\计算机\code\c++_code\20哈希\2.哈希冲突闭散列\2.哈希冲突闭散列.cpp(39): note: 参见对正在编译的函数 模板 实例化“void HashTable<int,int>::checkCapacity(void)”的引用
+  c:\users\19827\desktop\计算机\code\c++_code\20哈希\2.哈希冲突闭散列\2.哈希冲突闭散列.cpp(148): note: 参见对正在编译的 类 模板 实例化 "HashTable<int,int>" 的引用
+  2.哈希冲突闭散列.vcxproj -> C:\Users\19827\Desktop\计算机\code\c++_code\20哈希\Debug\2.哈希冲突闭散列.exe

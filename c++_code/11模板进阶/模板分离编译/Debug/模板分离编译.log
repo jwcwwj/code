@@ -1,0 +1,3 @@
+﻿  main.cpp
+main.obj : error LNK2005: "void __cdecl test(void)" (?test@@YAXXZ) 已经在 模板分离编译.obj 中定义
+C:\Users\19827\Desktop\计算机\code\c++_code\11模板进阶\Debug\模板分离编译.exe : fatal error LNK1169: 找到一个或多个多重定义的符号

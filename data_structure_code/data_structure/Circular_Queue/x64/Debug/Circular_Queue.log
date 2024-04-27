@@ -1,0 +1,4 @@
+﻿  Circular_Queue.c
+  Circular_Queue.vcxproj -> C:\Users\19827\Desktop\计算机\code\data_structure_code\data_structure\x64\Debug\Circular_Queue.exe
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\circular_queue\circular_queue.c(51): warning C6011: 取消对 NULL 指针“mq”的引用。
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\circular_queue\circular_queue.c(51): warning C26451: Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).

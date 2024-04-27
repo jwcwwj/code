@@ -1,0 +1,6 @@
+﻿  c++入门.cpp
+c:\users\19827\desktop\计算机\code\c++_code\01c++入门\01c++入门\c++入门.cpp(132): warning C4244: “初始化”: 从“double”转换到“const int”，可能丢失数据
+c:\users\19827\desktop\计算机\code\c++_code\01c++入门\01c++入门\c++入门.cpp(233): error C2912: 显式专用化；“void foo(std::nullptr_t)”不是函数模板的专用化
+c:\users\19827\desktop\计算机\code\c++_code\01c++入门\01c++入门\c++入门.cpp(255): error C2672: “foo”: 未找到匹配的重载函数
+c:\users\19827\desktop\计算机\code\c++_code\01c++入门\01c++入门\c++入门.cpp(255): error C2784: “void foo(T *)”: 未能从“nullptr”为“T *”推导 模板 参数
+  c:\users\19827\desktop\计算机\code\c++_code\01c++入门\01c++入门\c++入门.cpp(227): note: 参见“foo”的声明

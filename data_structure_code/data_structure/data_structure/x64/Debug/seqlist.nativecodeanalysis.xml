@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure</FILEPATH>
+      <FILENAME>seqlist.c</FILENAME>
+      <LINE>63</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6387</DEFECTCODE>
+    <DESCRIPTION>“tmp”可能是“0”: 这不符合函数“memcpy”的规范。</DESCRIPTION>
+    <FUNCTION>checkCapacity</FUNCTION>
+    <DECORATED>checkCapacity</DECORATED>
+    <FUNCLINE>54</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure</FILEPATH>
+        <FILENAME>seqlist.c</FILENAME>
+        <LINE>56</LINE>
+        <COLUMN>14</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure</FILEPATH>
+        <FILENAME>seqlist.c</FILENAME>
+        <LINE>61</LINE>
+        <COLUMN>6</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure</FILEPATH>
+        <FILENAME>seqlist.c</FILENAME>
+        <LINE>62</LINE>
+        <COLUMN>15</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>声明</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>“tmp”可能为 NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure</FILEPATH>
+        <FILENAME>seqlist.c</FILENAME>
+        <LINE>63</LINE>
+        <COLUMN>8</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>声明</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>“tmp”是“memcpy”的输入/输出参数(在 f:\install\vc\tools\msvc\14.16.27023\include\vcruntime_string.h:40 处声明)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure</FILEPATH>
+        <FILENAME>seqlist.c</FILENAME>
+        <LINE>63</LINE>
+        <COLUMN>8</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>使用情况</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>“tmp”不应为 NULL，因为这与“memcpy”上的 SAL 批注不一致</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

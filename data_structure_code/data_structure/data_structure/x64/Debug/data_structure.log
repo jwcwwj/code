@@ -1,0 +1,9 @@
+﻿  SeqList.c
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(61): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(98): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(131): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(182): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(235): warning C4267: “函数”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(239): warning C4267: “函数”: 从“size_t”转换到“int”，可能丢失数据
+  data_structure.vcxproj -> C:\Users\19827\Desktop\计算机\code\data_structure_code\data_structure\x64\Debug\data_structure.exe
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(63): warning C6387: “tmp”可能是“0”: 这不符合函数“memcpy”的规范。

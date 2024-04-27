@@ -1,0 +1,8 @@
+﻿  SeqList.c
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(115): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(128): warning C4018: “<=”: 有符号/无符号不匹配
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(147): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(150): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(162): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\19827\desktop\计算机\code\data_structure_code\data_structure\data_structure\seqlist.c(188): warning C4018: “<”: 有符号/无符号不匹配
+  data_structure.vcxproj -> C:\Users\19827\Desktop\计算机\code\data_structure_code\data_structure\Debug\data_structure.exe
